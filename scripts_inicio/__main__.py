@@ -1,5 +1,12 @@
 from time import sleep
 import os
+import signal
+
+class TimeoutException(Exception): 
+    pass
+
+def timeout_handler(signum, frame):
+    raise TimeoutException
 
 def main():
     #Inicio, lectura de archivo.txt
@@ -13,10 +20,21 @@ def main():
     for i in range (len(cant_lineas)):
         print(i + 1,"-",cant_lineas[i]) 
     sleep(0.3)
+
+    #Configurar señal para el timeout
+    signal.signal(signal.SIGALRM, timeout_handler)
    
     #Activar/no modo interactivo
     modo_interactivo = False    
-    interactivo = int(input("Queres entrar al modo interactivo? (1, si) (0, no) " ))
+    print("Queres entrar al modo interactivo? (1, si) (0, no) " )
+    try:
+        signal.alarm(10)  # Tiempo límite de 10 segundos
+        interactivo = int(input("Elige una opción: "))
+        signal.alarm(0)  # Cancelar alarma si se responde a tiempo
+    except TimeoutException:
+        print("\nTiempo agotado. Asumiendo respuesta negativa.")
+        interactivo = 0
+
     while interactivo != 1 and interactivo != 0:
         interactivo = int(input("Por favor ingresa 1 o 0 para continuar putito rico "))
     if interactivo == 1:
