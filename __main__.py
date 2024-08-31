@@ -12,7 +12,7 @@ def timeout_handler(signum, frame):
 
 
 
-def main():
+def main(): 
     file = open("/home/luciowo/scripts_inicio/tareas.txt", 'r+')
     cant_lineas = file.readlines()
     file.close()
