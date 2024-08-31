@@ -71,23 +71,30 @@ def main():
         if accion == 4: 
             modo_interactivo = False
 
+
+
         #Modificar tareas
         while accion == 1: 
             sleep(0.3)
             file = open("/home/luciowo/scripts_inicio/tareas.txt", 'w+')
-            print("¿Que tarea queres modificar?")
+            print("¿Que tarea queres modificar? (-1 para cancelar)")
             for i in range(len(cant_lineas)): 
                 print("Tarea","-",i + 1)
 
             while True: 
                 try: 
                     n = int(input("Numero de tarea: "))
-                    if n > 0 and n <= len(cant_lineas):
+                    if n > 0 and n <= len(cant_lineas) or n == -1:
                         break
                     else: 
                         print("ingresa un numero de tarea valido por favor ")
                 except(ValueError):
                     print("Que barbaro lo tuyo ") 
+            #cancelar modificar tareas
+            if n == -1: 
+                file.close()
+                break
+
             while True:
                 try:
                     string = str(input("Modifica la tarea (ingresa texto) "))
@@ -109,13 +116,18 @@ def main():
                         print("Por favor ingresa 1 o 0 para continuar putito rico ")
                 except(ValueError): 
                     print("1 o 0, 1 o 0, 1 o 0, 1 o 0, 1 o 0, 1 o 0 ")
-            
-            
+
+
+
         #Agregar tareas
         while accion == 2:
             sleep(0.3) 
             file = open("/home/luciowo/scripts_inicio/tareas.txt", 'w+')
-            new_task = str(input("Agrega tu nueva tarea! "))
+            new_task = str(input("Agrega tu nueva tarea! (-1 para cancelar) "))
+            if new_task == '-1': 
+                file.close()
+                break
+            
             cant_lineas.append(new_task + '\n')
             file.writelines(cant_lineas)
 
@@ -137,6 +149,8 @@ def main():
                 file.close()
                 accion  = 4
                  
+
+
         #Eliminar tareas 
         while accion == 3: 
             file = open("/home/luciowo/scripts_inicio/tareas.txt", 'w+')
@@ -181,6 +195,8 @@ def main():
                 if eliminar == 0: 
                     file.close()
                 print(" ")
+
+
 
 if __name__ == '__main__':
     main()
