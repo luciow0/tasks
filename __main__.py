@@ -5,9 +5,12 @@ import signal
 class TimeoutException(Exception): 
     pass
 
+
 #raise: levantaz/alzar/subir; used to throw (or raise) an exception
 def timeout_handler(signum, frame):
     raise TimeoutException
+
+
 
 def main():
     file = open("/home/luciowo/scripts_inicio/tareas.txt", 'r+')
